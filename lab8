@@ -1,0 +1,198 @@
+
+                 App.jsx
+
+
+import React, { useState } from "react";
+import "./index.css";
+
+export default function App() {
+  const [tasks, setTasks] = useState([]);
+  const [filter, setFilter] = useState("all");
+  const [form, setForm] = useState({ name: "", date: "", desc: "" });
+
+  const addTask = (e) => {
+    e.preventDefault();
+    if (form.name && form.date) {
+      setTasks([...tasks, { ...form, done: false }]);
+      setForm({ name: "", date: "", desc: "" });
+    }
+  };
+
+  const toggleTask = (index) => {
+    setTasks(
+      tasks.map((t, i) =>
+        i === index ? { ...t, done: !t.done } : t
+      )
+    );
+  };
+
+  const filteredTasks = tasks.filter((t) => {
+    if (filter === "all") return true;
+    if (filter === "done") return t.done;
+    return !t.done;
+  });
+
+  return (
+    <div className="app">
+      <h1>Reminder App</h1>
+
+      <form onSubmit={addTask}>
+        <input
+          type="text"
+          placeholder="name"
+          value={form.name}
+          onChange={(e) =>
+            setForm({ ...form, name: e.target.value })
+          }
+        />
+
+        <input
+          type="date"
+          value={form.date}
+          onChange={(e) =>
+            setForm({ ...form, date: e.target.value })
+          }
+        />
+
+        <input
+          type="text"
+          placeholder="desc"
+          value={form.desc}
+          onChange={(e) =>
+            setForm({ ...form, desc: e.target.value })
+          }
+        />
+
+        <button type="submit">Add</button>
+      </form>
+
+      <div className="filters">
+        <button onClick={() => setFilter("all")}>all</button>
+        <button onClick={() => setFilter("done")}>done</button>
+        <button onClick={() => setFilter("notdone")}>notdone</button>
+      </div>
+
+      <ul>
+        {filteredTasks.map((t, i) => (
+          <li
+            key={i}
+            onClick={() => toggleTask(i)}
+            className={t.done ? "done" : ""}
+          >
+            <b>{t.name}</b> - {t.date}{" "}
+            {t.desc && `| ${t.desc}`}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+
+
+
+                                       index.css
+
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #dcdcdc;
+}
+
+/* MAIN CARD */
+.app {
+  width: 500px;
+  margin: 80px auto;
+  background: #f5f5f5;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* TITLE */
+h1 {
+  text-align: center;
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+/* FORM */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form input {
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+/* ADD BUTTON */
+form button {
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #4da3d9;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+form button:hover {
+  background: #3a8ec2;
+}
+
+/* FILTER BUTTONS */
+.filters {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+.filters button {
+  width: 30%;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: #ddd;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.filters button:hover {
+  background: #bbb;
+}
+
+/* TASK LIST */
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background: #eaeaea;
+  margin: 10px 0;
+  padding: 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* HOVER EFFECT */
+li:hover {
+  transform: scale(1.02);
+  background: #dcdcdc;
+}
+
+/* DONE TASK */
+li.done {
+  text-decoration: line-through;
+  text-decoration-thickness: 3px;
+  text-decoration-color: black;
+  color: #777;
+}
