@@ -1,0 +1,202 @@
+                                 App.jsx
+
+
+import React from "react";
+import { Routes, Route, NavLink } from "react-router-dom";
+import Home from "./Home.jsx";
+import About from "./About.jsx";
+import Contact from "./Contact.jsx";
+import "./index.css";
+
+function App() {
+  const linkStyle = ({ isActive }) => ({
+    textDecoration: "none",
+    color: isActive ? "blue" : "black",
+    fontWeight: isActive ? "bold" : "normal",
+    margin: "0 15px"
+  });
+
+  return (
+    <div>
+
+      {/* TOP NAVBAR */}
+      <nav className="navbar">
+        <NavLink to="/" style={linkStyle} end>Home</NavLink>
+        <NavLink to="/about" style={linkStyle}>About</NavLink>
+        <NavLink to="/contact" style={linkStyle}>Contact</NavLink>
+      </nav>
+
+      {/* PAGE CONTENT */}
+      <div className="page">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+        </Routes>
+      </div>
+
+    </div>
+  );
+}
+
+export default App;
+
+
+
+
+                             Home.jsx
+
+
+
+
+import React from "react";
+
+function Home() {
+  return (
+    <div className="page home-bg">
+      <div className="card">
+        <h2 className="title home-text">Welcome</h2>
+        <p className="tag">Welcomes you all 🎉</p>
+      </div>
+    </div>
+  );
+}
+
+export default Home;
+
+
+
+                          About.jsx
+
+
+
+import React from "react";
+
+function About() {
+  return (
+    <div className="page about-bg">
+      <div className="card">
+        <h2 className="title about-text">About Us</h2>
+        <p>
+          We are a team dedicated to building beautiful and functional web applications.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export default About;
+
+
+                               Contact.jsx
+
+
+
+import React from "react";
+
+function Contact() {
+  return (
+    <div className="page contact-bg">
+      <div className="card">
+        <h2 className="title contact-text">Contact Us</h2>
+        <p>Email: xxx@example.com</p>
+        <button className="btn">Send Message</button>
+      </div>
+    </div>
+  );
+}
+
+export default Contact;
+
+
+
+
+index.css
+
+
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+  border-bottom: 1px solid #ccc;
+}
+
+.page {
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-bg {
+  background-color: #e6f7ff;
+}
+
+.about-bg {
+  background-color: #ffe6f0;
+}
+
+.contact-bg {
+  background-color: #f2f2f2;
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  width: 260px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.home-text {
+  color: #007BFF;
+}
+
+.about-text {
+  color: #d63384;
+}
+
+.contact-text {
+  color: #333;
+}
+
+.tag {
+  background: #cce5ff;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
+.btn {
+  margin-top: 10px;
+  padding: 8px 15px;
+  border: none;
+  background: #007BFF;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+
+                              main.jsx
+
+
+
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
+import { BrowserRouter } from "react-router-dom";
+import "./index.css";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);
